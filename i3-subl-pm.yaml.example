@@ -1,0 +1,51 @@
+network:
+    vpn: "us100"
+
+sublime_project:
+    project:
+        path: "."
+        exclude:
+            - "src"
+    themes:
+        path: "src/themes"
+    packages:
+        path: "src/app/Packages"
+    laravel:
+        path: "src"
+        exclude:
+            - "themes"
+            - "app/Packages"
+
+i3_workspace:
+    panel_left:
+        width: 0.5
+        nodes:
+            panel_top:
+                height: 0.3
+                nodes:
+                    Source:
+                        terminal: true
+                        path: "src"
+                    Docker:
+                        terminal: true
+                        path: "."
+                    Watcher:
+                        terminal: true
+                        path: "src"
+                    Services:
+                        terminal: true
+                        path: "."
+                        command: "zsh -i -c 'docker-compose up --force-recreate; zsh'"
+                        quit:
+                            - "docker kill $(docker ps -q)"
+            panel_bottom:
+                height: 0.7
+                nodes:
+                    browser: true
+    panel_right:
+        width: 0.5
+        nodes:
+            editor: true
+
+# vim: set ft=yaml tabstop=4 shiftwidth=4 :
+
