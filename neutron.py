@@ -313,7 +313,7 @@ class SublimeProject(ProjectManagerModule):
         for label in self.config:
             options = self.config[label]
 
-            if label.lower() == "project":
+            if label.lower() == "neutron":
                 label = self.project.getNamespace()
 
             folder = {
@@ -463,7 +463,7 @@ class i3Workspace(ProjectManagerModule):
             layout = "tabbed"
             percent = 1
 
-        if layout is not "tabbed" and label.lower() == lastitem.lower():
+        if layout != "tabbed" and label.lower() == lastitem.lower():
             layout = "tabbed"
 
         response = {
@@ -476,7 +476,7 @@ class i3Workspace(ProjectManagerModule):
             "nodes": [ ]
         }
         
-        if layout is not "tabbed" and not self.__hasSubGroups(item["nodes"]):
+        if layout != "tabbed" and not self.__hasSubGroups(item["nodes"]):
             return { **response, **{ "nodes": [ self.__parseGroups({
                 "border": "pixel",
                 "floating": "auto_off",
