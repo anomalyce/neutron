@@ -313,7 +313,7 @@ class SublimeProject(ProjectManagerModule):
         for label in self.config:
             options = self.config[label]
 
-            if label.lower() == "neutron":
+            if label.lower() == "%project%":
                 label = self.project.getNamespace()
 
             folder = {
