@@ -9,9 +9,9 @@ import glob
 
 class ProjectManager():
     debug = False
-    settingsfile = "i3-subl-pm"
-    configfile = "i3-subl-pm.yaml"
-    lastproject = "/tmp/i3-subl-pm.recent"
+    settingsfile = "neutron"
+    configfile = "neutron.yml"
+    lastproject = "/tmp/neutron.recent"
     pathseparator = "→"
     settings = {
         "paths": [
@@ -21,7 +21,7 @@ class ProjectManager():
             "workspace": 3,
         },
         "launcher": {
-            "command": "echo '%s' | rofi -dmenu -p 'Project Manager'"
+            "command": "echo '%s' | rofi -dmenu -config $HOME/.config/rofi -p 'Project Manager'"
         },
         "terminal": {
             "command": "alacritty --title \"%s\" --class \"Project%s\" --working-directory %s",
@@ -169,7 +169,7 @@ class ProjectManager():
         homedirectory = os.path.expanduser("~")
         
         for path in self.settings["paths"]:
-            fullpath = os.path.expanduser(path + "/**/" + self.configfile)
+            fullpath = os.path.expanduser(path + "/**/*/" + self.configfile)
 
             for project in glob.glob(fullpath):
                 namespace = os.path.basename(os.path.dirname(project))
@@ -184,7 +184,7 @@ class ProjectManager():
             output += "\nquit active project"
         
         command = self.settings["launcher"]["command"] % output
-
+        print(command)
         choice = self.command(command, self, sys._getframe().f_code.co_name)
         choice = choice.strip()
 
@@ -304,7 +304,7 @@ class NetworkManager(ProjectManagerModule):
 # --------------------------------------------------
 
 class SublimeProject(ProjectManagerModule):
-    tmpfile = "/tmp/i3-subl-pm.sublime-project"
+    tmpfile = "/tmp/neutron.sublime-project"
     sublime_project = {
         "folders": [ ],
     }
@@ -349,7 +349,7 @@ class SublimeProject(ProjectManagerModule):
 # --------------------------------------------------
 
 class i3Workspace(ProjectManagerModule):
-    tmpfile = "/tmp/i3-subl-pm.i3-workspace"
+    tmpfile = "/tmp/neutron.i3-workspace"
     i3_workspace = { "nodes": [ ] }
     commands = [ ]
     quitcommands = [ ]
@@ -498,7 +498,7 @@ class i3Workspace(ProjectManagerModule):
         return subgroups
 
     def __isGroup(self, label, item):
-        return "nodes" in item and len(item["nodes"]) > 0
+        return type(item) is dict and "nodes" in item and len(item["nodes"]) > 0
 
     def __isTerminal(self, label, item):
         return type(item) is dict and "terminal" in item and item["terminal"] is True
