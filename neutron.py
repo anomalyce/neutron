@@ -169,7 +169,7 @@ class ProjectManager():
         homedirectory = os.path.expanduser("~")
         
         for path in self.settings["paths"]:
-            fullpath = os.path.expanduser(path + "/**/*/" + self.configfile)
+            fullpath = os.path.expanduser(path + "/**/**/" + self.configfile)
 
             for project in glob.glob(fullpath):
                 namespace = os.path.basename(os.path.dirname(project))
