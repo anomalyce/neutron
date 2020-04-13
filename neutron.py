@@ -178,10 +178,10 @@ class ProjectManager():
                 
                 projects.append("%s %s %s" % (namespace, self.pathseparator, directory))
 
-        output = "\n".join(projects)
+        output = "|".join(projects)
         
         if os.path.exists(self.lastproject):
-            output += "\nquit active project"
+            output += "|quit active project"
         
         command = self.settings["launcher"]["command"] % output
         print(command)
