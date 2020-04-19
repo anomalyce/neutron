@@ -175,8 +175,11 @@ class ProjectManager():
                 namespace = os.path.basename(os.path.dirname(project))
                 directory = os.path.dirname(os.path.dirname(project))
                 directory = directory.replace(homedirectory, "~")
+
+                neutronignore = "%s/.neutronignore" % os.path.dirname(project)
                 
-                projects.append("%s %s %s" % (namespace, self.pathseparator, directory))
+                if os.path.exists(neutronignore) is False:
+                    projects.append("%s %s %s" % (namespace, self.pathseparator, directory))
 
         output = "|".join(projects)
         
