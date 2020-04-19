@@ -150,6 +150,12 @@ class ProjectManager():
     def getModule(self, name):
         return self.modules[name]
 
+    def getRelativeOrAbsolutePath(self, path):
+        if path[0] == "~":
+            return os.path.abspath(os.path.expanduser(path))
+        else:
+            return os.path.abspath(self.getDirectory() + "/" + path)
+
     def command(self, command, module, method):
         if self.debug is True:
             print("[DEBUG] %s::%s called `%s`" % (module.name(), method, command))
@@ -325,14 +331,15 @@ class SublimeProject(ProjectManagerModule):
             }
 
             if type(options) is str:
-                folder["path"] = os.path.abspath(self.project.getDirectory() + "/" + options)
+                folder["path"] = self.project.getRelativeOrAbsolutePath(options)
             else:
-                folder["path"] = os.path.abspath(self.project.getDirectory() + "/" + options["path"])
+                folder["path"] = self.project.getRelativeOrAbsolutePath(options["path"])
 
                 if "exclude" in options and len(options["exclude"]) > 0:
                     folder["folder_exclude_patterns"] = list(options["exclude"])
 
             self.sublime_project["folders"].append(folder)
+            print(self.sublime_project["folders"])
 
         return self
 
@@ -390,7 +397,7 @@ class i3Workspace(ProjectManagerModule):
         for target in settings["targets"]:
             swallows.append({ target: settings["targets"][target] % label })
 
-        path = os.path.abspath(self.project.getDirectory() + "/" + item["path"])
+        path = self.project.getRelativeOrAbsolutePath(item["path"])
 
         command = settings["command"] % (label, label, path)
 
