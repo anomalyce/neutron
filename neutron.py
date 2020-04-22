@@ -38,9 +38,9 @@ class ProjectManager():
         },
         "editor": {
             "title": "Sublime Text",
-            "command": "subl3 --project %s",
+            "command": "subl --project %s",
             "targets": {
-                "class": "^Subl3$"
+                "class": "^(Sublime_text|Subl|Subl3|Subl4)$"
             }
         }
     }
