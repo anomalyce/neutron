@@ -31,7 +31,7 @@ class ProjectManager():
         },
         "browser": {
             "title": "Firefox",
-            "command": "firefox https://127.0.0.1",
+            "command": "firefox https://localhost",
             "targets": {
                 "class": "^Firefox$"
             }
