@@ -328,6 +328,14 @@ class SublimeProject(ProjectManagerModule):
             folder = {
                 "name": label,
                 "path": None,
+                "folder_exclude_patterns": [],
+                "binary_file_patterns": [
+                    "*.jpg", "*.jpeg", "*.png", "*.gif", "*.ttf", "*.tga", "*.dds", "*.ico", "*.eot", "*.pdf", "*.swf", "*.jar", "*.zip",
+                    "src/**",
+                ],
+                "index_exclude_patterns": [
+                    "src/**",
+                ]
             }
 
             if type(options) is str:
