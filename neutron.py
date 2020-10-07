@@ -295,20 +295,20 @@ class NetworkManager(ProjectManagerModule):
         if "vpn" in self.config and self.config["vpn"] is not False:
             self.connection = self.config["vpn"]
         else:
-            self.connection = os.getenv("VPN_CONNECTION", "Sweden")
+            self.connection = os.getenv("VPN_CONNECTION", "se")
 
         return self
 
     def preHook(self):
         if self.connection is not None:
-            self.project.command("nordvpn disconnect", self, sys._getframe().f_code.co_name)
+            self.project.command("mullvad disconnect", self, sys._getframe().f_code.co_name)
 
     def execute(self):
         return None
 
     def postHook(self):
         if self.connection is not None:
-            self.project.command("nordvpn connect %s" % self.connection, self, sys._getframe().f_code.co_name)
+            self.project.command("mullvad relay set location %s && mullvad connect" % self.connection, self, sys._getframe().f_code.co_name)
 
 # --------------------------------------------------
 
